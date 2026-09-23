@@ -1,62 +1,44 @@
-# Chess Timer Pro - অফলাইন দাবা ঘড়ি (PWA & Android)
+# Chess Timer Pro
 
-একটি সম্পূর্ণ প্রফেশনাল, লাইট মোড দাবা খেলার টাইম কাউন্টার ও ক্লক ওয়েব ও অ্যান্ড্রয়েড অ্যাপ্লিকেশন (PWA)। এটি ১০০% ইন্টারনেট ছাড়া যেকোনো ডিভাইসে নিরবচ্ছিন্নভাবে কাজ করে।
-
-## প্রধান বৈশিষ্ট্যসমূহ (Features)
-
-- **লাইট মোড (Light Mode Design):** পরিষ্কার, দৃষ্টিনন্দন এবং উচ্চ বৈসাদৃশ্যের হালকা রঙের টুর্নামেন্ট-গ্রেড ইন্টারফেস।
-- **সম্পূর্ণ অফলাইন (100% Offline Support):** সার্ভিস ওয়ার্কার (Service Worker) এবং প্রিক্যাশড অ্যাসেট থাকায় ইন্টারনেট ছাড়াই চলে।
-- **স্বতন্ত্র সময় নিয়ন্ত্রণ (Custom Time Controls):**
-  - **বুলেট (Bullet):** 1m | 1m+1s | 2m+1s
-  - **ব্লিটজ (Blitz):** 3m | 3m+2s | 5m | 5m+3s | 5m+5s
-  - **র‍্যাপিড (Rapid):** 10m | 15m+10s (FIDE Standard) | 20m
-  - **ক্লাসিক্যাল (Classical):** 30m | 60m | 90m+30s
-  - **কাস্টম সময়:** যেকোনো মিনিট, সেকেন্ড এবং ফিশার ইনক্রিমেন্ট অথবা সিম্পল ডিলে।
-- **মুখোমুখি মোড (Face-to-Face Mode):** একজন খেলোয়াড় উল্টো দিকে বসেও সহজে দেখতে ও চাপ দিতে পারে (১৮০ ডিগ্রি রোটেটেড ডিসপ্লে)।
-- **স্পর্শ ও শব্দ প্রভাব (Audio & Haptics):** ওয়েব অডিও এপিআই দিয়ে তৈরি রিয়ালিস্টিক মেকানিক্যাল ক্লক ক্লিক সাউন্ড, কম সময়ের ওয়ার্নিং সংকেত এবং সময় শেষের বুজার। ফোনে ভাইব্রেশন রেসপন্স।
-- **চাল সংখ্যা ও মোভ হিস্ট্রি:** উভয় খেলোয়াড়ের প্রতি চালের সময় বিশ্লেষণ এবং গড় চালের সময়।
-- **দ্বিভাষিক সমর্থন:** বাংলা ও ইংরেজি উভয় ভাষায় সম্পূর্ণ নিয়ন্ত্রিত।
+A professional, high-contrast digital chess clock application designed for over-the-board play, blitz matches, and tournaments.
 
 ---
 
-## গিটহাব দিয়ে অ্যান্ড্রয়েড APK তৈরি করার উপায় (GitHub to Android APK)
+## How to Use
 
-### পদ্ধতি ১: PWABuilder (সবচেয়ে দ্রুত ও সহজ)
-১. এই রিপোজিটরিটি গিটহাবে পুশ করুন এবং GitHub Pages অথবা Vercel/Netlify-তে হোস্ট করুন।
-২. [PWABuilder](https://www.pwabuilder.com)-এ যান এবং আপনার সাইটের লিঙ্ক দিন।
-৩. "Package for Android" চাপুন এবং সরাসরি আপনার ফোনে ইনস্টল করার জন্য `.apk` অথবা গুগল প্লে স্টোরের জন্য `.aab` ডাউনলোড করুন।
+### 1. Starting a Game
+- Tap anywhere on **White's clock** (or press the **Spacebar** on a keyboard) to make the first move and start Black's clock.
+- After making a move on the physical board, tap your clock side to stop your timer and start your opponent's timer.
 
-### পদ্ধতি ২: ক্যাপাসিটর (Capacitor) দিয়ে লোকাল Android Studio বিল্ড
-```bash
-# ১. গিটহাব রিপোজিটরি ক্লোন করুন
-git clone <your-github-repo-url>
-cd chess-timer-pro
+### 2. Pausing and Resuming
+- Tap the **Pause** button (⏸) in the central control bar (or press the **Escape** key) to pause both clocks.
+- Tap the **Play** button (▶) to resume the match where you left off.
 
-# ২. ডিপেন্ডেন্সি ইনস্টল করুন
-npm install
+### 3. Resetting the Match
+- Tap the **Reset** button (↺) in the center controls.
+- Confirm the reset in the dialog to restore both clocks to the original base time.
 
-# ৩. প্রোডাকশন বিল্ড করুন
-npm run build
+### 4. Setting Time Controls
+Tap the **Settings** gear icon (⚙) to configure game timing:
+- **Preset Modes:** Choose from standard tournament categories:
+  - **Bullet:** 1 min, 1 min + 1s, 2 min + 1s
+  - **Blitz:** 3 min, 3 min + 2s, 5 min, 5 min + 3s, 5 min + 5s
+  - **Rapid:** 10 min, 15 min + 10s (FIDE standard), 20 min
+  - **Classical:** 30 min, 60 min, 90 min + 30s
+- **Custom Time:** Set custom minutes and seconds for each player independently (useful for time handicaps), along with Fischer increment per move or Sudden Death mode.
 
-# ৪. ক্যাপাসিটর অ্যান্ড্রয়েড অ্যাড করুন
-npm i -D @capacitor/cli @capacitor/core @capacitor/android
-npx cap init "Chess Timer Pro" "com.chess.timerpro" --web-dir dist
-npx cap add android
+### 5. Board Orientation
+- Tap the **Orientation** button in the center control bar to cycle between layouts:
+  - **Face-to-Face Mode:** The top player's clock is flipped 180° so two players seated opposite each other can easily read and tap their timers.
+  - **Side-by-Side Mode:** Horizontal layout suitable for tablets or landscape screens placed next to the board.
+  - **Portrait Mode:** Both clocks facing the same direction.
 
-# ৫. অ্যান্ড্রয়েড স্টুডিওতে ওপেন করুন ও APK জেনারেট করুন
-npx cap open android
-```
+### 6. Sound & Haptics
+- **Sound Toggle (🔊/🔇):** Enables or disables mechanical click sounds on moves, warning tones when low on time (< 10 seconds), and buzzer on timeout.
+- **Haptic Feedback:** Vibrates mobile devices on each turn switch for physical confirmation.
 
-### পদ্ধতি ৩: অ্যান্ড্রয়েড ফোনে ক্রোম ব্রাউজার থেকে সরাসরি ইনস্টল (Instant PWA)
-১. অ্যান্ড্রয়েড ফোনের গুগল ক্রোম ব্রাউজারে অ্যাপটি খুলুন।
-২. উপরে ডানদিকের তিনটি ডট মেনু (⋮) চাপুন।
-৩. "Install app" অথবা "Add to Home screen" চাপুন।
-৪. অ্যাপটি সাধারণ অ্যান্ড্রয়েড অ্যাপের মতো হোম স্ক্রিনে যোগ হবে এবং অফলাইনে কাজ করবে।
-
----
-
-## টেকনোলজি স্ট্যাক
-- **ফ্রেমওয়ার্ক:** React 19 + TypeScript + Vite
-- **স্টাইলিং:** Tailwind CSS (Light Mode Optimized)
-- **অফলাইন সাপোর্ট:** Vite Plugin PWA + Workbox Service Worker
-- **অডিও ইঞ্জিন:** HTML5 Web Audio API (100% Client-Side Synthesizer)
+### 7. Move History & Statistics
+- Tap the **History** icon in the center bar to review:
+  - Total moves made by each player.
+  - Average time spent per move.
+  - Detailed move-by-move log with timestamps and remaining clock times.
