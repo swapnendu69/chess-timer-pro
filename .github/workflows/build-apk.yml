@@ -32,10 +32,13 @@ jobs:
         run: |
           npm run build
 
-      - name: Setup Capacitor & Android
+      - name: Install Capacitor
         run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
-          npx cap init "Chess Timer Pro" "com.chesstimer.pro" --web-dir dist
+
+      - name: Create JSON Config & Add Android
+        run: |
+          echo '{"appId": "com.chesstimer.pro", "appName": "Chess Timer Pro", "webDir": "dist"}' > capacitor.config.json
           npx cap add android
           npx cap sync android
 
