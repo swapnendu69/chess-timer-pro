@@ -1,0 +1,6 @@
+{
+  "name": "Chess Timer Pro - অফলাইন দাবা ঘড়ি",
+  "description": "অফলাইন দাবা খেলার টাইম কাউন্টার ও ক্লক অ্যাপ - লাইট মোড, ফিশার ইনক্রিমেন্ট এবং কাস্টম সময় নিয়ন্ত্রণ সুবিধা সহ অ্যান্ড্রয়েড রেডি পিডব্লিউএ।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
