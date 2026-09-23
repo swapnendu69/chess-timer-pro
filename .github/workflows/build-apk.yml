@@ -36,11 +36,16 @@ jobs:
         run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
 
-      - name: Create JSON Config & Add Android
+      - name: Create Config & Add Android
         run: |
           echo '{"appId": "com.chesstimer.pro", "appName": "Chess Timer Pro", "webDir": "dist"}' > capacitor.config.json
           npx cap add android
           npx cap sync android
+
+      - name: Fix Kotlin Duplicate Classes Conflict
+        run: |
+          echo "android.enableD8.desugaring=true" >> android/gradle.properties
+          echo "configurations.all { resolutionStrategy { force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22', 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22', 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22' } }" >> android/app/build.gradle
 
       - name: Accept Android Licenses
         run: |
