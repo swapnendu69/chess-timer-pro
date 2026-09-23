@@ -24,34 +24,32 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Dependencies
+      - name: Install Project Dependencies
         run: |
           npm install
 
-      - name: Build Web Production App
+      - name: Build Web App
         run: |
           npm run build
 
-      - name: Setup Capacitor & Android Platform
+      - name: Setup Capacitor & Android
         run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android
-          npx --yes @capacitor/cli init "Chess Timer Pro" "com.chesstimer.pro" --web-dir dist
-          npx --yes @capacitor/cli add android
-          npx --yes @capacitor/cli sync android
+          npx cap init "Chess Timer Pro" "com.chesstimer.pro" --web-dir dist
+          npx cap add android
+          npx cap sync android
 
-      - name: Grant Execute Permission to Gradle
+      - name: Accept Android Licenses
         run: |
-          chmod +x android/gradlew
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Build Android Debug APK
+      - name: Build Debug APK
         run: |
           cd android
+          chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
-      - name: Upload Debug APK Artifact
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: ChessTimer-APK
