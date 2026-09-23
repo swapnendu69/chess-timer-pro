@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -16,36 +16,44 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Dependencies
-        run: |
-          npm install
-          npm install -D @capacitor/cli @capacitor/core @capacitor/android
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build Web App
-        run: npm run build
-
-      - name: Init Capacitor & Add Android
+      - name: Install Project Dependencies
         run: |
+          npm ci || npm install
+
+      - name: Build Web Production Files
+        run: |
+          npm run build
+
+      - name: Install & Configure Capacitor
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android
           npx cap init "Chess Timer Pro" "com.chesstimer.pro" --web-dir dist
-          npx cap add android
+          npx cap add android || true
           npx cap sync android
+
+      - name: Grant Execute Permission to Gradle
+        run: |
+          cd android
+          chmod +x gradlew
 
       - name: Build Debug APK
         run: |
           cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: Upload APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: ChessTimer-APK
+          name: ChessTimer-Pro-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
