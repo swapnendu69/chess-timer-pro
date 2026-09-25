@@ -28,6 +28,7 @@ export interface MoveRecord {
   timeSpentMs: number;
   timeRemainingMs: number;
   timestamp: number;
+  note?: string;
 }
 
 export interface GameStats {
