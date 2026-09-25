@@ -194,6 +194,20 @@ export function useChessTimer({
     }
   }, [gameStatus]);
 
+  const pauseGame = useCallback(() => {
+    if (gameStatus === 'running') {
+      setGameStatus('paused');
+    }
+  }, [gameStatus]);
+
+  const resumeGame = useCallback(() => {
+    if (gameStatus === 'paused') {
+      setGameStatus('running');
+      moveStartTimestampRef.current = Date.now();
+      lastTickRef.current = performance.now();
+    }
+  }, [gameStatus]);
+
   const resetGame = useCallback(() => {
     setWhiteTimeMs(getInitialWhiteMs());
     setBlackTimeMs(getInitialBlackMs());
@@ -207,13 +221,88 @@ export function useChessTimer({
   }, [getInitialWhiteMs, getInitialBlackMs]);
 
   // Adjust time on the fly if needed (penalty/time bonus)
-  const adjustPlayerTime = useCallback((player: Player, deltaMs: number) => {
-    if (player === 'white') {
-      setWhiteTimeMs((prev) => Math.max(1000, prev + deltaMs));
-    } else {
-      setBlackTimeMs((prev) => Math.max(1000, prev + deltaMs));
-    }
-  }, []);
+  const adjustPlayerTime = useCallback(
+    (player: Player, deltaMs: number, note?: string) => {
+      const now = Date.now();
+      if (player === 'white') {
+        setWhiteTimeMs((prev) => {
+          const next = Math.max(1000, prev + deltaMs);
+          if (note) {
+            setMoveHistory((hist) => [
+              ...hist,
+              {
+                moveNumber: whiteMoves,
+                player: 'white',
+                timeSpentMs: 0,
+                timeRemainingMs: next,
+                timestamp: now,
+                note,
+              },
+            ]);
+          }
+          return next;
+        });
+      } else {
+        setBlackTimeMs((prev) => {
+          const next = Math.max(1000, prev + deltaMs);
+          if (note) {
+            setMoveHistory((hist) => [
+              ...hist,
+              {
+                moveNumber: blackMoves,
+                player: 'black',
+                timeSpentMs: 0,
+                timeRemainingMs: next,
+                timestamp: now,
+                note,
+              },
+            ]);
+          }
+          return next;
+        });
+      }
+    },
+    [whiteMoves, blackMoves]
+  );
+
+  const setPlayerExactTime = useCallback(
+    (player: Player, exactMs: number, note?: string) => {
+      const targetMs = Math.max(1000, exactMs);
+      const now = Date.now();
+      if (player === 'white') {
+        setWhiteTimeMs(targetMs);
+        if (note) {
+          setMoveHistory((hist) => [
+            ...hist,
+            {
+              moveNumber: whiteMoves,
+              player: 'white',
+              timeSpentMs: 0,
+              timeRemainingMs: targetMs,
+              timestamp: now,
+              note,
+            },
+          ]);
+        }
+      } else {
+        setBlackTimeMs(targetMs);
+        if (note) {
+          setMoveHistory((hist) => [
+            ...hist,
+            {
+              moveNumber: blackMoves,
+              player: 'black',
+              timeSpentMs: 0,
+              timeRemainingMs: targetMs,
+              timestamp: now,
+              note,
+            },
+          ]);
+        }
+      }
+    },
+    [whiteMoves, blackMoves]
+  );
 
   return {
     whiteTimeMs,
@@ -226,7 +315,10 @@ export function useChessTimer({
     moveHistory,
     handlePlayerClockPress,
     togglePause,
+    pauseGame,
+    resumeGame,
     resetGame,
     adjustPlayerTime,
+    setPlayerExactTime,
   };
 }
