@@ -12,9 +12,11 @@ interface PlayerClockProps {
   isFlagFall: boolean;
   isWinner: boolean;
   moves: number;
-  orientation: OrientationMode;
+  isFlipped?: boolean;
+  orientation?: OrientationMode;
   t: (key: string) => string;
   onPress: () => void;
+  onQuickAdjust?: (seconds: number) => void;
 }
 
 export const PlayerClock: React.FC<PlayerClockProps> = ({
@@ -26,18 +28,17 @@ export const PlayerClock: React.FC<PlayerClockProps> = ({
   isFlagFall,
   isWinner,
   moves,
-  orientation,
+  isFlipped = false,
   t,
   onPress,
+  onQuickAdjust,
 }) => {
   const isWhite = player === 'white';
-  const isTopPlayer = isWhite;
-  const isFaceToFace = orientation === 'face_to_face' && isTopPlayer;
   const isLowTime = timeMs <= 15000 && timeMs > 0;
   const isOutOfTime = timeMs <= 0;
 
   // Format time string
-  const timeDisplay = formatTime(timeMs, false, true);
+  const timeDisplay = formatTime(timeMs, true);
 
   // Dynamic tactile styling
   let containerBg = 'bg-white';
@@ -77,7 +78,7 @@ export const PlayerClock: React.FC<PlayerClockProps> = ({
       onClick={onPress}
       disabled={isPaused || isOutOfTime || isWinner}
       className={`relative w-full h-full flex flex-col items-center justify-between p-4 sm:p-6 transition-all duration-150 rounded-2xl sm:rounded-3xl border-2 sm:border-3 ${containerBg} ${borderColor} ${shadowEffect} active:scale-[0.98] cursor-pointer touch-manipulation select-none overflow-hidden ${
-        isFaceToFace ? 'rotate-180' : ''
+        isFlipped ? 'rotate-180' : ''
       }`}
     >
       {/* Top Header Row within Clock Button */}
@@ -157,12 +158,48 @@ export const PlayerClock: React.FC<PlayerClockProps> = ({
             ? t('tapToPlay')
             : isOutOfTime
             ? t('timeOut')
+            : isPaused
+            ? t('paused')
             : t('waiting')}
         </span>
       </div>
 
-      {/* Visual Plunger bar at bottom of the clock */}
-      <div className="w-full pointer-events-none">
+      {/* Visual Plunger bar at bottom of the clock / Quick Pause Action */}
+      <div className="w-full flex flex-col gap-1 pointer-events-none">
+        {isPaused && onQuickAdjust && (
+          <div className="pointer-events-auto flex items-center justify-center gap-2 py-0.5">
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickAdjust(60);
+              }}
+              title="Add 1 minute penalty to this clock"
+              className="px-2 py-0.5 rounded-md bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold text-[11px] cursor-pointer shadow-xs active:scale-95 transition"
+            >
+              +1m
+            </span>
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickAdjust(120);
+              }}
+              title="Add 2 minutes penalty to this clock"
+              className="px-2 py-0.5 rounded-md bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold text-[11px] cursor-pointer shadow-xs active:scale-95 transition"
+            >
+              +2m
+            </span>
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickAdjust(-60);
+              }}
+              title="Subtract 1 minute"
+              className="px-2 py-0.5 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[11px] cursor-pointer shadow-xs active:scale-95 transition"
+            >
+              -1m
+            </span>
+          </div>
+        )}
         <div
           className={`h-2 sm:h-2.5 w-full rounded-full transition-all duration-200 ${
             isActive
