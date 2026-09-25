@@ -38,9 +38,11 @@ export const HeaderControls: React.FC<HeaderControlsProps> = ({
       {/* Brand */}
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm sm:text-base shadow-xs">
-            ♘
-          </div>
+          <img
+            src="/pwa-192x192.png"
+            alt="Chess Timer Pro Icon"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs object-cover border border-slate-200"
+          />
           <div>
             <h1 className="text-xs sm:text-sm font-black text-slate-800 tracking-tight leading-tight">
               {t('appTitle')}
