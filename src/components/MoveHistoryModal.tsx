@@ -111,25 +111,32 @@ export const MoveHistoryModal: React.FC<MoveHistoryModalProps> = ({
                 return (
                   <div
                     key={index}
-                    className="grid grid-cols-4 items-center text-xs px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 transition border border-slate-100"
+                    className="flex flex-col gap-1 px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 transition border border-slate-100"
                   >
-                    <span className="font-mono text-slate-400 font-bold">
-                      {record.moveNumber}
-                    </span>
-                    <span className="font-semibold flex items-center gap-1.5 text-slate-700">
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          isWhite ? 'bg-slate-300 border border-slate-400' : 'bg-slate-800'
-                        }`}
-                      />
-                      {isWhite ? 'White' : 'Black'}
-                    </span>
-                    <span className="font-mono text-slate-600">
-                      {(record.timeSpentMs / 1000).toFixed(1)}s
-                    </span>
-                    <span className="font-mono font-bold text-right text-slate-800">
-                      {formatTime(record.timeRemainingMs, false)}
-                    </span>
+                    <div className="grid grid-cols-4 items-center text-xs">
+                      <span className="font-mono text-slate-400 font-bold">
+                        {record.moveNumber}
+                      </span>
+                      <span className="font-semibold flex items-center gap-1.5 text-slate-700">
+                        <span
+                          className={`w-2 h-2 rounded-full ${
+                            isWhite ? 'bg-slate-300 border border-slate-400' : 'bg-slate-800'
+                          }`}
+                        />
+                        {isWhite ? 'White' : 'Black'}
+                      </span>
+                      <span className="font-mono text-slate-600">
+                        {record.timeSpentMs > 0 ? `${(record.timeSpentMs / 1000).toFixed(1)}s` : '-'}
+                      </span>
+                      <span className="font-mono font-bold text-right text-slate-800">
+                        {formatTime(record.timeRemainingMs, false)}
+                      </span>
+                    </div>
+                    {record.note && (
+                      <div className="text-[11px] font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                        ⚠️ {record.note}
+                      </div>
+                    )}
                   </div>
                 );
               })}
