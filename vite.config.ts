@@ -14,9 +14,9 @@ export default defineConfig(() => {
         includeAssets: ['icon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
         manifest: {
           id: '/',
-          name: 'Chess Timer Pro - দাবা ঘড়ি',
-          short_name: 'দাবা ঘড়ি',
-          description: 'অফলাইন দাবা খেলার টাইম কাউন্টার ও ক্লক - লাইট মোড ও কাস্টম সময় নিয়ন্ত্রণ সহ',
+          name: 'Chess Timer Pro',
+          short_name: 'Chess Timer',
+          description: 'Offline Digital Chess Clock & Timer with Fischer increments and custom time controls',
           theme_color: '#f8fafc',
           background_color: '#ffffff',
           display: 'standalone',
