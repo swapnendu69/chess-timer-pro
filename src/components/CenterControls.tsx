@@ -6,54 +6,56 @@ import {
   Settings,
   Volume2,
   VolumeX,
-  Smartphone,
   History,
   SmartphoneNfc,
+  ShieldAlert,
+  ArrowUpDown,
 } from 'lucide-react';
-import { OrientationMode } from '../types/chess';
+import { Player } from '../types/chess';
 
 interface CenterControlsProps {
   gameStatus: 'ready' | 'running' | 'paused' | 'flag_fall';
-  orientation: OrientationMode;
+  topPlayer: Player;
   soundEnabled: boolean;
   hapticsEnabled: boolean;
   onTogglePlayPause: () => void;
   onResetClick: () => void;
   onOpenSettings: () => void;
+  onOpenIllegalMove: () => void;
+  onSwapSides: () => void;
   onToggleSound: () => void;
   onToggleHaptics: () => void;
-  onToggleOrientation: () => void;
   onOpenHistory: () => void;
   t: (key: string) => string;
 }
 
 export const CenterControls: React.FC<CenterControlsProps> = ({
   gameStatus,
-  orientation,
+  topPlayer,
   soundEnabled,
   hapticsEnabled,
   onTogglePlayPause,
   onResetClick,
   onOpenSettings,
+  onOpenIllegalMove,
+  onSwapSides,
   onToggleSound,
   onToggleHaptics,
-  onToggleOrientation,
   onOpenHistory,
   t,
 }) => {
   const isRunning = gameStatus === 'running';
-  const isPaused = gameStatus === 'paused';
   const isReady = gameStatus === 'ready';
 
   return (
-    <div className="z-10 flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:py-2 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full border border-slate-200 shadow-lg text-slate-700">
+    <div className="z-10 flex items-center justify-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full border border-slate-200 shadow-lg text-slate-700">
       {/* Play / Pause Button */}
       <button
         type="button"
         onClick={onTogglePlayPause}
         disabled={isReady || gameStatus === 'flag_fall'}
         title={isRunning ? t('pause') : t('play')}
-        className={`p-2 sm:p-2.5 rounded-full transition-all flex items-center justify-center ${
+        className={`p-2 sm:p-2.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${
           isReady || gameStatus === 'flag_fall'
             ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400'
             : isRunning
@@ -62,9 +64,9 @@ export const CenterControls: React.FC<CenterControlsProps> = ({
         }`}
       >
         {isRunning ? (
-          <Pause className="w-5 h-5 fill-current" />
+          <Pause className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
         ) : (
-          <Play className="w-5 h-5 fill-current ml-0.5" />
+          <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5" />
         )}
       </button>
 
@@ -73,9 +75,39 @@ export const CenterControls: React.FC<CenterControlsProps> = ({
         type="button"
         onClick={onResetClick}
         title={t('reset')}
-        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 active:scale-95 transition-all"
+        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 active:scale-95 transition-all cursor-pointer"
       >
         <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
+
+      <div className="h-5 w-px bg-slate-200 mx-0.5" />
+
+      {/* Illegal Move / Penalty Button */}
+      <button
+        type="button"
+        onClick={onOpenIllegalMove}
+        title="Illegal Move Penalty / Manual Time Increment (+Time)"
+        className="p-2 sm:p-2.5 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 hover:text-amber-800 active:scale-95 transition-all cursor-pointer relative group"
+      >
+        <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5" />
+        <span className="absolute -top-1 -right-1 text-[9px] bg-amber-600 text-white font-black px-1 rounded-full shadow-2xs">
+          +
+        </span>
+      </button>
+
+      {/* 180° Swap Sides Button (Player 1 & 2 switch sides) */}
+      <button
+        type="button"
+        onClick={onSwapSides}
+        title={`Swap Sides 180° (Currently Top: ${
+          topPlayer === 'white' ? 'White' : 'Black'
+        })`}
+        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600 active:scale-95 transition-all relative cursor-pointer"
+      >
+        <ArrowUpDown className="w-4 h-4 sm:w-5 sm:h-5" />
+        <span className="absolute -top-1 -right-1 text-[9px] bg-blue-600 text-white font-bold px-1 rounded-full shadow-2xs">
+          180°
+        </span>
       </button>
 
       <div className="h-5 w-px bg-slate-200 mx-0.5" />
@@ -85,7 +117,7 @@ export const CenterControls: React.FC<CenterControlsProps> = ({
         type="button"
         onClick={onOpenSettings}
         title={t('settings')}
-        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600 active:scale-95 transition-all"
+        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600 active:scale-95 transition-all cursor-pointer"
       >
         <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
@@ -95,28 +127,9 @@ export const CenterControls: React.FC<CenterControlsProps> = ({
         type="button"
         onClick={onOpenHistory}
         title={t('stats')}
-        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600 active:scale-95 transition-all"
+        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600 active:scale-95 transition-all cursor-pointer"
       >
         <History className="w-4 h-4 sm:w-5 sm:h-5" />
-      </button>
-
-      {/* Orientation toggle */}
-      <button
-        type="button"
-        onClick={onToggleOrientation}
-        title={`Orientation: ${
-          orientation === 'face_to_face'
-            ? t('faceToFace')
-            : orientation === 'side_by_side'
-            ? t('sideBySide')
-            : t('portrait')
-        }`}
-        className="p-2 sm:p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 active:scale-95 transition-all relative"
-      >
-        <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
-        <span className="absolute -top-1 -right-1 text-[9px] bg-blue-600 text-white font-bold px-1 rounded-full">
-          {orientation === 'face_to_face' ? '180°' : '0°'}
-        </span>
       </button>
 
       {/* Sound Toggle */}
@@ -124,7 +137,7 @@ export const CenterControls: React.FC<CenterControlsProps> = ({
         type="button"
         onClick={onToggleSound}
         title={soundEnabled ? t('soundOn') : t('soundOff')}
-        className={`p-2 sm:p-2.5 rounded-full transition-all ${
+        className={`p-2 sm:p-2.5 rounded-full transition-all cursor-pointer ${
           soundEnabled
             ? 'bg-blue-50 text-blue-600 hover:bg-blue-100'
             : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
@@ -142,7 +155,7 @@ export const CenterControls: React.FC<CenterControlsProps> = ({
         type="button"
         onClick={onToggleHaptics}
         title={t('haptics')}
-        className={`p-2 sm:p-2.5 rounded-full transition-all hidden sm:flex ${
+        className={`p-2 sm:p-2.5 rounded-full transition-all hidden sm:flex cursor-pointer ${
           hapticsEnabled
             ? 'bg-blue-50 text-blue-600 hover:bg-blue-100'
             : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
