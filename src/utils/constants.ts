@@ -4,7 +4,7 @@ export const TIME_PRESETS: TimePreset[] = [
   // Bullet
   {
     id: 'bullet_1_0',
-    nameBn: '১ মিনিট (বুলেট)',
+    nameBn: '1 min (Bullet)',
     nameEn: '1 min (Bullet)',
     category: 'bullet',
     baseMinutes: 1,
@@ -13,7 +13,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'bullet_1_1',
-    nameBn: '১ মি + ১ সে (বুলেট)',
+    nameBn: '1 min + 1s (Bullet)',
     nameEn: '1 min + 1s (Bullet)',
     category: 'bullet',
     baseMinutes: 1,
@@ -22,7 +22,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'bullet_2_1',
-    nameBn: '২ মি + ১ সে (বুলেট)',
+    nameBn: '2 min + 1s (Bullet)',
     nameEn: '2 min + 1s (Bullet)',
     category: 'bullet',
     baseMinutes: 2,
@@ -33,7 +33,7 @@ export const TIME_PRESETS: TimePreset[] = [
   // Blitz
   {
     id: 'blitz_3_0',
-    nameBn: '৩ মিনিট (ব্লিটজ)',
+    nameBn: '3 min (Blitz)',
     nameEn: '3 min (Blitz)',
     category: 'blitz',
     baseMinutes: 3,
@@ -42,7 +42,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'blitz_3_2',
-    nameBn: '৩ মি + ২ সে (ব্লিটজ)',
+    nameBn: '3 min + 2s (Blitz)',
     nameEn: '3 min + 2s (Blitz)',
     category: 'blitz',
     baseMinutes: 3,
@@ -51,7 +51,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'blitz_5_0',
-    nameBn: '৫ মিনিট (ব্লিটজ)',
+    nameBn: '5 min (Blitz)',
     nameEn: '5 min (Blitz)',
     category: 'blitz',
     baseMinutes: 5,
@@ -60,7 +60,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'blitz_5_3',
-    nameBn: '৫ মি + ৩ সে (ব্লিটজ)',
+    nameBn: '5 min + 3s (Blitz)',
     nameEn: '5 min + 3s (Blitz)',
     category: 'blitz',
     baseMinutes: 5,
@@ -69,7 +69,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'blitz_5_5',
-    nameBn: '৫ মি + ৫ সে (ব্লিটজ)',
+    nameBn: '5 min + 5s (Blitz)',
     nameEn: '5 min + 5s (Blitz)',
     category: 'blitz',
     baseMinutes: 5,
@@ -80,7 +80,7 @@ export const TIME_PRESETS: TimePreset[] = [
   // Rapid
   {
     id: 'rapid_10_0',
-    nameBn: '১০ মিনিট (র‍্যাপিড)',
+    nameBn: '10 min (Rapid)',
     nameEn: '10 min (Rapid)',
     category: 'rapid',
     baseMinutes: 10,
@@ -89,7 +89,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'rapid_15_10',
-    nameBn: '১৫ মি + ১০ সে (র‍্যাপিড)',
+    nameBn: '15 min + 10s (Rapid)',
     nameEn: '15 min + 10s (Rapid)',
     category: 'rapid',
     baseMinutes: 15,
@@ -98,7 +98,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'rapid_20_0',
-    nameBn: '২০ মিনিট (র‍্যাপিড)',
+    nameBn: '20 min (Rapid)',
     nameEn: '20 min (Rapid)',
     category: 'rapid',
     baseMinutes: 20,
@@ -109,7 +109,7 @@ export const TIME_PRESETS: TimePreset[] = [
   // Classical
   {
     id: 'classical_30_0',
-    nameBn: '৩০ মিনিট (ক্লাসিক্যাল)',
+    nameBn: '30 min (Classical)',
     nameEn: '30 min (Classical)',
     category: 'classical',
     baseMinutes: 30,
@@ -118,7 +118,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'classical_60_0',
-    nameBn: '৬০ মিনিট (ক্লাসিক্যাল)',
+    nameBn: '60 min (Classical)',
     nameEn: '60 min (Classical)',
     category: 'classical',
     baseMinutes: 60,
@@ -127,7 +127,7 @@ export const TIME_PRESETS: TimePreset[] = [
   },
   {
     id: 'classical_90_30',
-    nameBn: '৯০ মি + ৩০ সে (FIDE)',
+    nameBn: '90 min + 30s (FIDE)',
     nameEn: '90 min + 30s (FIDE)',
     category: 'classical',
     baseMinutes: 90,
