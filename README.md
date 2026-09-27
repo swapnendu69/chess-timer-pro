@@ -1,8 +1,8 @@
-# Chess Timer Pro
+# Chess Timer Pro ♔⏰
 
 A professional, high-contrast digital chess clock application designed for over-the-board play, blitz matches, and tournaments.
 
----
+https://github.com/user-attachments/assets/407390ee-1357-4e63-828d-1680dfc881e8
 
 ## How to Use
 
