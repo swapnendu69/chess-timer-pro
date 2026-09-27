@@ -4,7 +4,7 @@ A professional, high-contrast digital chess clock application designed for over-
 
 https://github.com/user-attachments/assets/407390ee-1357-4e63-828d-1680dfc881e8
 
-## How to Use ⚙️
+## How to Use 📌
 
 ### 1. Starting a Game 
 - Tap anywhere on **White's clock** (or press the **Spacebar** on a keyboard) to make the first move and start Black's clock.
