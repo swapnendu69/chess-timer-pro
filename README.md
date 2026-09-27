@@ -37,7 +37,7 @@ Tap the **Settings** gear icon (⚙) to configure game timing:
 - **Sound Toggle (🔊/🔇):** Enables or disables mechanical click sounds on moves, warning tones when low on time (< 10 seconds), and buzzer on timeout.
 - **Haptic Feedback:** Vibrates mobile devices on each turn switch for physical confirmation.
 
-### 7. Move History & Statistics
+### 7. Move History & Statistics 📊
 - Tap the **History** icon in the center bar to review:
   - Total moves made by each player.
   - Average time spent per move.
