@@ -1,0 +1,14 @@
+{
+  "appId": "com.chesstimer.pro",
+  "appName": "Chess Timer Pro",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#ffffff",
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}
