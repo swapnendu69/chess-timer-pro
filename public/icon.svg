@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="softSkyPill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe" />
+      <stop offset="100%" stop-color="#bae6fd" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#0284c7" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- Pure White squircle icon body with soft sky glow -->
+  <rect width="512" height="512" rx="116" fill="url(#bgGrad)" />
+  <rect x="20" y="20" width="472" height="472" rx="98" fill="#ffffff" filter="url(#shadow)" stroke="#e0f2fe" stroke-width="4" />
+
+  <!-- Clock Plungers on Top (Left resting, Right active sky blue) -->
+  <rect x="130" y="78" width="72" height="24" rx="8" fill="#cbd5e1" />
+  <rect x="310" y="60" width="72" height="34" rx="8" fill="url(#skyGrad)" />
+
+  <!-- Dual Timer Base Frame (Clean White & Soft Ice Blue border) -->
+  <rect x="76" y="98" width="360" height="316" rx="38" fill="#f0f9ff" stroke="#bae6fd" stroke-width="4" />
+
+  <!-- Left Clock Face -->
+  <circle cx="168" cy="238" r="76" fill="#ffffff" stroke="#cbd5e1" stroke-width="5" />
+  <line x1="168" y1="238" x2="168" y2="186" stroke="#475569" stroke-width="6" stroke-linecap="round" />
+  <line x1="168" y1="238" x2="206" y2="238" stroke="#475569" stroke-width="5" stroke-linecap="round" />
+  <circle cx="168" cy="238" r="7" fill="#f43f5e" />
+  <polygon points="168,168 190,178 168,188" fill="#f43f5e" />
+
+  <!-- Right Clock Face (Active Light Blue Accent) -->
+  <circle cx="344" cy="238" r="76" fill="#ffffff" stroke="url(#skyGrad)" stroke-width="6" />
+  <line x1="344" y1="238" x2="320" y2="192" stroke="#0284c7" stroke-width="6" stroke-linecap="round" />
+  <line x1="344" y1="238" x2="370" y2="254" stroke="#0284c7" stroke-width="5" stroke-linecap="round" />
+  <circle cx="344" cy="238" r="7" fill="#0ea5e9" />
+
+  <!-- Center divider badge with Minimal Chess Knight -->
+  <rect x="236" y="208" width="40" height="60" rx="10" fill="url(#skyGrad)" />
+  <!-- Minimal Chess Knight silhouette in White -->
+  <path d="M246 254 L266 254 C266 246 262 240 260 236 C266 234 266 224 262 220 C256 218 252 220 250 224 C246 222 242 226 242 230 C244 236 240 242 246 254 Z" fill="#ffffff" />
+
+  <!-- Digital Time Display Badges below dials -->
+  <rect x="118" y="336" width="100" height="42" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="168" y="364" font-family="system-ui, sans-serif" font-weight="800" font-size="20" fill="#64748b" text-anchor="middle">05:00</text>
+
+  <rect x="294" y="336" width="100" height="42" rx="10" fill="url(#softSkyPill)" stroke="#7dd3fc" stroke-width="2" />
+  <text x="344" y="364" font-family="system-ui, sans-serif" font-weight="800" font-size="20" fill="#0369a1" text-anchor="middle">04:32</text>
+</svg>
