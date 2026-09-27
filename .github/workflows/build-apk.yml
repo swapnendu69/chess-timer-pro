@@ -1,64 +1,92 @@
-name: Build Android APK
+name: Build Android APK & Release
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+    tags:
+      - 'v*'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
+    name: Build & Package Android APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: Setup Java JDK
+      - name: Setup Java JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '21'
 
-      - name: Install Project Dependencies
+      - name: Install Dependencies
         run: |
           npm install --legacy-peer-deps
 
-      - name: Build Web App
+      - name: Build Web Application
         run: |
           npm run build
 
-      - name: Install Capacitor
+      - name: Setup & Sync Capacitor Android
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
+          # Install Capacitor CLI & Android platform dependencies
+          npm install @capacitor/core @capacitor/cli @capacitor/android --save --legacy-peer-deps
+          
+          # Initialize Android platform if not present
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+          
+          # Replace default Capacitor icon with custom Light Blue & White app icons
+          if [ -d "android-res" ]; then
+            echo "Copying custom Android adaptive icons..."
+            cp -rf android-res/* android/app/src/main/res/
+          fi
 
-      - name: Create Config & Add Android
-        run: |
-          echo '{"appId": "com.chesstimer.pro", "appName": "Chess Timer Pro", "webDir": "dist"}' > capacitor.config.json
-          npx cap add android
+          # Sync web build to Android project
           npx cap sync android
 
-      - name: Fix Kotlin Duplicate Classes Conflict
+      - name: Make Gradle Executable
         run: |
-          echo "android.enableD8.desugaring=true" >> android/gradle.properties
-          echo "configurations.all { resolutionStrategy { force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22', 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22', 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22' } }" >> android/app/build.gradle
+          chmod +x android/gradlew
 
-      - name: Accept Android Licenses
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-
-      - name: Build Debug APK
+      - name: Build Android APK
         run: |
           cd android
-          chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
-      - name: Upload Debug APK
+      - name: Prepare APK Output
+        run: |
+          mkdir -p build-output
+          cp android/app/build/outputs/apk/debug/app-debug.apk build-output/Chess-Timer-Pro.apk
+          echo "APK successfully built: build-output/Chess-Timer-Pro.apk"
+
+      - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ChessTimer-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: Chess-Timer-Pro-APK
+          path: build-output/Chess-Timer-Pro.apk
+          retention-days: 30
+
+      - name: Publish GitHub Release (On Tag)
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: Chess Timer Pro Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: build-output/Chess-Timer-Pro.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
